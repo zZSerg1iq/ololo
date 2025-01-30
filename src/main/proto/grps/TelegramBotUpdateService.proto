@@ -1,0 +1,195 @@
+syntax = "proto3";
+
+package telegram;
+
+//само обновление
+message TGUpdate {
+  int64 updateId = 1;
+  int64 chatId = 2;
+  TGCallbackQuery callbackQuery = 3;
+  TGMessage message = 4;
+}
+
+
+//юзер
+message TGUser {
+  int64 userId = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string userName = 4;
+  string languageCode = 5;
+
+  string nickName = 6;
+  string role = 7;
+}
+
+//сообщение
+message TGMessage {
+  int32 messageId = 1;
+  int64 date = 2;
+  string text = 3;
+  string captionEntities = 4;
+  string caption = 5;
+  int64 editDate = 6;
+  string mediaGroupId = 7;
+
+  TGAnimation animation = 8;
+  TGDocument document = 9;
+  TGLocation location = 10;
+  TGPoll poll = 11;
+  TGVideo video = 12;
+  TGVoice voice = 13;
+  TGSticker sticker = 14;
+  TGKeyboardMarkup replyMarkup = 15;
+  repeated TGMessageEntity entities = 16;
+  repeated TGPhotoSize photo = 17;
+  TGUser from = 18;
+
+  string messageType = 19;
+  int64 chatId = 20;
+}
+
+//ответ  после нажатия кнопки?
+message TGCallbackQuery{
+  string id = 1;
+  string data = 2;
+  TGUser from = 3;
+  TGMessage message = 4;
+}
+
+//gif
+message TGAnimation {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  int32 width = 3;
+  int32 height = 4;
+  int32 duration = 5;
+  int64 fileSize = 7;
+  string fileName = 8;
+  string mimeType = 9;
+
+  TGPhotoSize thumbnail = 6;
+}
+
+
+//отображаемое видео
+message TGVideo {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  int32 width = 3;
+  int32 height = 4;
+  int32 duration = 5;
+  int64 fileSize = 7;
+  string fileName = 8;
+  string mimeType = 9;
+
+  TGPhotoSize thumbnail = 6;
+}
+
+
+//голосовуха
+message TGVoice {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  int32 duration = 5;
+  int64 fileSize = 7;
+  string mimeType = 9;
+}
+
+
+//опрос
+message TGPoll {
+  string id = 1;
+  string question = 2;
+  string type = 3;
+  bool allowMultipleAnswers = 4;
+  int32 correctOptionId = 5;
+  string explanation = 6;
+
+  repeated TGPollOption options = 7;
+}
+
+//варианты ответы опроса
+message TGPollOption{
+  string text = 1;
+  int32 voterCount = 2;
+}
+
+//кнопки в чате
+message TGKeyboardMarkup {
+  repeated TGKeyboardRow keyboard = 1;
+
+  int32 rowWidth = 2;
+  string keyboardType = 3;
+}
+message TGKeyboardRow{
+  repeated TGKeyboardButton button = 1;
+}
+message TGKeyboardButton {
+  string text = 1;
+  string url = 2;
+  string callbackData = 3;
+}
+
+//хз что
+message TGMessageEntity {
+  string type = 1;
+  int32 offset = 2;
+  int32 length = 3;
+  string text = 4;
+}
+
+//геоточка
+message TGLocation {
+  double longitude = 1;
+  double latitude = 2;
+  int64 livePeriod = 3;
+}
+
+//любой документ
+message TGDocument {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  string fileName = 3;
+  string mimeType = 4;
+  int64 fileSize = 5;
+}
+
+//Фотография
+message TGPhotoSize {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  int32 width = 3;
+  int32 height = 4;
+  int32 fileSize = 5;
+  string filePath = 6;
+}
+
+//стикер
+message TGSticker {
+  string fileId = 1;
+  string fileUniqueId = 2;
+  string type = 3;
+  int32 width = 4;
+  int32 height = 5;
+  int32 fileSize = 6;
+  string emoji = 7;
+  string setName = 8;
+  bool isAnimated = 9;
+  bool isVideo = 10;
+
+  TGPhotoSize thumbnail = 11;
+}
+
+// Сервис обновления Telegram Bot
+service TelegramBotUpdateService {
+  rpc sendUpdate(TGUpdate) returns (TGUpdate);
+}
+
+//TODO научиться посылать все возможные сообщения
+//TODO из сервиса handler в telegram:
+//TODO Message, EditMessage, DeleteMessage
+//TODO InlineKeyboard, ReplyKeyboard
+//TODO Audio, Video, Animation,
+//TODO Sticker, Pic, Document, Location
+//TODO Poll, Voice, MediaGroup

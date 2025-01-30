@@ -1,0 +1,24 @@
+inviteLink:
+  salt: "HflkCFolC7N6)nC*I@#pncf{p0DC(3gvbpo@^*09ogrb45pobCX&"
+
+server:
+  port: 8081
+
+spring:
+  application:
+    name: "message_handler-service"
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/mh_service
+    driver-class-name: org.postgresql.Driver
+    password: postgres
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+   # show-sql: true
+
+grpc:
+  server:
+    port: 9091
+#    max-inbound-message-size: 200MB
